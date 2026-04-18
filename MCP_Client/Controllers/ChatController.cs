@@ -18,7 +18,6 @@ public class ChatController : ControllerBase
     [HttpGet("tools")]
     public async Task<IActionResult> GetTools()
     {
-        // Las tools ahora vienen del MCP Server
         var tools = await _client.ListToolsAsync();
         return Ok(tools);
     }

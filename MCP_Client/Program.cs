@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-// 🔧 Registrar MCP Client como Singleton
+// Registrar MCP Client como Singleton
 builder.Services.AddSingleton<Task<McpClient>>(async _ =>
 {
     var transport = new StdioClientTransport(new StdioClientTransportOptions
@@ -21,7 +21,7 @@ builder.Services.AddSingleton<Task<McpClient>>(async _ =>
     return await McpClient.CreateAsync(transport);
 });
 
-// 🆕 Registrar ChatService - CORREGIDO
+// Registrar ChatService
 builder.Services.AddScoped<ChatService>(provider =>
 {
     var mcpClientTask = provider.GetRequiredService<Task<McpClient>>();

@@ -1,5 +1,6 @@
 using ModelContextProtocol.Client;
 using System.Text.Json;
+using MCP_Client.Models;
 
 public class ChatService
 {
@@ -15,19 +16,19 @@ public class ChatService
 
     public async Task<ChatResponse> ProcessMessageAsync(string userMessage)
     {
-        // 1️⃣ Obtener tools disponibles del MCP Server
+        // Obtener tools disponibles del MCP Server
         var tools = await _mcpClient.ListToolsAsync();
         var toolDescriptions = BuildToolDescriptions(tools);
 
-        // 2️⃣ Enviar al LM Studio con contexto de tools disponibles
+        // Enviar al LM Studio con contexto de tools disponibles
         var llmResponse = await CallLmStudio(userMessage, toolDescriptions);
 
-        // 3️⃣ Analizar si el LM Studio sugiere una tool
+        // Analizar si el LM Studio sugiere una tool
         var toolName = ExtractToolName(llmResponse.Content);
 
         if (!string.IsNullOrEmpty(toolName))
         {
-            // 4️⃣ Ejecutar la tool a través del MCP Server
+            // Ejecutar la tool a través del MCP Server
             var toolResult = await _mcpClient.CallToolAsync(toolName, new Dictionary<string, object?>());
             var toolResultText = ExtractToolResultText(toolResult);
 
@@ -50,8 +51,7 @@ public class ChatService
         };
     }
 
-    // 🛠️ Construir descripciones de tools para el LM Studio
-    // Usa IEnumerable para ser flexible con el tipo exacto
+    // Construir descripciones de tools para el LM Studio
     private string BuildToolDescriptions(IEnumerable<dynamic> tools)
     {
         var descriptions = new List<string>();
@@ -73,7 +73,6 @@ public class ChatService
         return "Herramientas disponibles:\n" + string.Join("\n", descriptions);
     }
 
-    // 📡 Llamar a LM Studio
     private async Task<LmStudioResponse> CallLmStudio(string userMessage, string toolDescriptions)
     {
         var request = new
@@ -124,7 +123,6 @@ Si no es posible realizar la acción o el usuario solo pide información, respon
         }
     }
 
-    // 🔍 Extraer nombre de tool
     private string? ExtractToolName(string content)
     {
         const string toolPrefix = "TOOL:";
@@ -140,7 +138,6 @@ Si no es posible realizar la acción o el usuario solo pide información, respon
         return null;
     }
 
-    // 📦 Extraer resultado de tool
     private string ExtractToolResultText(object resultado)
     {
         try
@@ -167,16 +164,5 @@ Si no es posible realizar la acción o el usuario solo pide información, respon
     }
 }
 
-// 📋 Modelos
-public class ChatResponse
-{
-    public string? Action { get; set; }
-    public string? Result { get; set; }
-    public string Message { get; set; } = "";
-    public bool Success { get; set; }
-}
 
-public class LmStudioResponse
-{
-    public string Content { get; set; } = "";
-}
+
