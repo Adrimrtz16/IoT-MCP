@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ESP32.MainPage">
+
+    <Grid RowDefinitions="*, Auto">
+
+        <ScrollView x:Name="ChatScrollView" Grid.Row="0">
+            <VerticalStackLayout
+                x:Name="MessagesContainer"
+                BackgroundColor="#F6F6F8"
+                Padding="15"
+                Spacing="12">
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Grid Grid.Row="1"
+              BackgroundColor="#F6F6F8"
+              Padding="10,12"
+              ColumnDefinitions="*, Auto">
+
+            <Entry
+                x:Name="MessageEntry"
+                Grid.Column="0"
+                Placeholder="Mensaje"
+                PlaceholderColor="#8E8E93"
+                BackgroundColor="#FFFFFF"
+                HeightRequest="38"
+                VerticalOptions="Center"
+                TextColor="#000000"
+                Margin="0,0,10,0"/>
+
+            <Button
+                Grid.Column="1"
+                Text="➤"
+                Clicked="OnSendClicked"
+                BackgroundColor="#007AFF"
+                TextColor="#FFFFFF"
+                CornerRadius="19"
+                WidthRequest="38"
+                HeightRequest="38"
+                Padding="0"
+                VerticalOptions="Center"/>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

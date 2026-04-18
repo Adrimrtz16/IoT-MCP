@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="ESP32/ESP32.csproj" />
+  <Project Path="MCP_Client/MCP_Client.csproj" Id="dee2352f-a075-4d4a-bb25-6b8235d4d75f" />
+  <Project Path="MCP_Server/MCP_Server.csproj" Id="6aa04646-4763-44a9-88db-3b7a83afe58e" />
+</Solution>
